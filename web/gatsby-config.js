@@ -12,6 +12,10 @@ module.exports = {
   plugins: [
     'gatsby-plugin-postcss',
     'gatsby-plugin-react-helmet',
+    `gatsby-transformer-sharp`, 
+    `gatsby-plugin-sharp`,
+    `gatsby-plugin-styled-components`,
+    `gatsby-plugin-sass`,
     {
       resolve: 'gatsby-source-sanity',
       options: {
@@ -19,6 +23,14 @@ module.exports = {
         token,
         watchMode: !isProd,
         overlayDrafts: !isProd && token
+      }
+    },
+    {
+      resolve: "gatsby-plugin-react-svg",
+      options: {
+        rule: {
+          include: /assets/ // See below to configure properly
+        }
       }
     }
   ]

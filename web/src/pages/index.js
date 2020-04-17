@@ -10,9 +10,25 @@ import GraphQLErrorList from '../components/graphql-error-list'
 import ProjectPreviewGrid from '../components/project-preview-grid'
 import SEO from '../components/seo'
 import Layout from '../containers/layout'
+import Img from "gatsby-image"
+import styled from "styled-components"
+import ImagesGrid from '../components/imagesGrid'
+import { ContainerFullWidth, ContainerBodyWidth } from '../containers'
 
 export const query = graphql`
   query IndexPageQuery {
+    images: sanitySiteSettings {
+      gallery {
+        mainImage {
+          asset {
+            fluid {
+              ...GatsbySanityImageFluid
+            }
+          }
+        }
+      }
+    }
+
     site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
       title
       description
@@ -71,11 +87,6 @@ const IndexPage = props => {
   }
 
   const site = (data || {}).site
-  const projectNodes = (data || {}).projects
-    ? mapEdgesToNodes(data.projects)
-      .filter(filterOutDocsWithoutSlugs)
-      .filter(filterOutDocsPublishedInTheFuture)
-    : []
 
   if (!site) {
     throw new Error(
@@ -83,19 +94,16 @@ const IndexPage = props => {
     )
   }
 
+  console.log(data.images)
+
   return (
     <Layout>
       <SEO title={site.title} description={site.description} keywords={site.keywords} />
-      <Container>
+      <ContainerBodyWidth>
         <h1 hidden>Welcome to {site.title}</h1>
-        {projectNodes && (
-          <ProjectPreviewGrid
-            title='Latest projects'
-            nodes={projectNodes}
-            browseMoreHref='/archive/'
-          />
-        )}
-      </Container>
+        
+        <ImagesGrid data={data} />
+      </ContainerBodyWidth>
     </Layout>
   )
 }
