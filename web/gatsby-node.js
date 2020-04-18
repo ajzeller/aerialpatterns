@@ -44,6 +44,46 @@ async function createProjectPages (graphql, actions, reporter) {
     })
 }
 
+async function createPhotoPages (graphql, actions, reporter) {
+  const {createPage} = actions
+  const result = await graphql(`
+    {
+      allSanityGalleryImage {
+        edges {
+          node {
+            id
+            publishedAt
+            slug {
+              current
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  if (result.errors) throw result.errors
+
+  const photoEdges = (result.data.allSanityGalleryImage || {}).edges || []
+
+  photoEdges
+    .filter(edge => !isFuture(edge.node.publishedAt))
+    .forEach(edge => {
+      const id = edge.node.id
+      const slug = edge.node.slug.current
+      const path = `/${slug}/`
+
+      reporter.info(`Creating photo page: ${path}`)
+
+      createPage({
+        path,
+        component: require.resolve('./src/templates/photo.js'),
+        context: {id}
+      })
+    })
+}
+
 exports.createPages = async ({graphql, actions, reporter}) => {
   await createProjectPages(graphql, actions, reporter)
+  await createPhotoPages(graphql, actions, reporter)
 }

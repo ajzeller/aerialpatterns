@@ -19,9 +19,12 @@ export const query = graphql`
   query IndexPageQuery {
     images: sanitySiteSettings {
       gallery {
+        slug {
+          current
+        }
         mainImage {
           asset {
-            fluid {
+            fluid(maxWidth: 400) {
               ...GatsbySanityImageFluid
             }
           }
