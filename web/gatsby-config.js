@@ -32,6 +32,19 @@ module.exports = {
           include: /assets/ // See below to configure properly
         }
       }
-    }
+    },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Aerial Patterns | Drone Photography`,
+        short_name: `Aerial Patterns`,
+        start_url: `/`,
+        background_color: `#fff`,
+        theme_color: `#4690F0`,
+        display: `standalone`,
+        icon: `src/assets/ap-logo.svg`,
+      },
+    },
+    `gatsby-plugin-offline`,
   ]
 }
