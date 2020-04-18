@@ -139,7 +139,7 @@ const Footer = ( { logoText, projects } ) => {
                 and <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.
               </p>
               <p>
-                © 2020 Andrew Zeller
+                © Andrew Zeller 2020
               </p>
             </div>
           </Social>
