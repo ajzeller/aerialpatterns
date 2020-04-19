@@ -38,6 +38,11 @@ export default {
       to: [{type: 'person'}]
     },
     {
+      name: 'metaImage',
+      title: 'Meta image',
+      type: 'figure'
+    },
+    {
       name: 'gallery',
       type: 'array',
       title: 'Gallery',

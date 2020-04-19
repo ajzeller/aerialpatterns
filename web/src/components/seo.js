@@ -48,6 +48,10 @@ function SEO ({description, lang, meta, keywords, title}) {
               {
                 name: 'twitter:description',
                 content: metaDescription
+              },
+              {
+                name: 'twitter:image',
+                content: data.site.metaImage.asset.fixed.src
               }
             ]
               .concat(
@@ -90,6 +94,13 @@ const detailsQuery = graphql`
       keywords
       author {
         name
+      }
+      metaImage {
+        asset {
+          fixed(width:1200) {
+            src
+          }
+        }
       }
     }
   }
